@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Do I Own This Game Options Page</title>
+    <link rel="stylesheet" href="options.css"/>
+    <link rel="stylesheet" href="../milligram.min.css"/>
+  </head>
+
+  <body>
+    <img src="../images/do_i_own_this_game_logo.png" alt="Do I own this game logo">
+    <div>
+      <h4>How to obtain Steam Api Key?</h4>
+      First step to get your own Steam API credentials is to have an Steam Account. 
+      To do that you need to access this page <a href="https://store.steampowered.com/join">https://store.steampowered.com/join</a>, and fill the requested information.
+      You will need to agree with the <a href="https://steamcommunity.com/dev/apiterms">Steam Api Terms of Use</a>, and that you should have spend more than <b>5.00 USD</b> in the Steam Store to be able to get the API key.
+
+      After login go to <a href="https://steamcommunity.com/login/home/?goto=%2Fdev%2Fapikey">https://steamcommunity.com/login/home/?goto=devapikey</a> fill your Steam Domain Name, confirm the <a href="https://steamcommunity.com/dev/apiterms">Steam Api Terms of Use</a> check box and click on the “Register” button.
+      If the registration was correct you should see your new Steam Api Key.
+    </div>
+    <div>
+      <h4>How to obtain Steam ID?</h4>
+      You can find your Steam ID from the profile tab of the Steam application by locating its URL.
+    </div>
+    <form class="mt-30">
+      <div>
+        <label>Steam API Key
+          <input type="text" id="steam-api-key">
+        </label>
+        <h6 class="text-success hidden" id="steam-api-key-already-set-message">Your Steam API Key is already set, we are not showing it for security reasons. By providing any value you will overwrite this value.</h6>
+      </div>
+      <div>
+        <label>Steam Id
+          <input type="text" id="steam-id">
+        </label>
+      </div>
+      <div>
+        <button class="button" type="submit">Save</button>
+      </div>
+    </form>
+
+    <span class="successfully-saved hidden" id="saved-message">Data saved!</span>
+
+    <script src="options.js"></script>
+
+  </body>
+
+</html>

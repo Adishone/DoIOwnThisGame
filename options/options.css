@@ -1,0 +1,31 @@
+div {
+    margin-top: 10px;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+.hidden {
+    display: none;
+}
+
+.text-success {
+    color: #198754;
+}
+
+.successfully-saved {
+    color: #1B7C18;										
+    border-radius: 5px;
+    border: 2px solid #1B7C18;
+    padding: .5em .75em;
+    background: #D6F8DD;
+    width: 25%;
+    margin-top: 20px;
+}
