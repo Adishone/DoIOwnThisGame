@@ -8,5 +8,3 @@ Have you ever came to a situation that there's multiple games in bundles on Humb
 1. Humble Bundle
 2. Fanatical
 3. Indie Gala
-
-## Screenshots
