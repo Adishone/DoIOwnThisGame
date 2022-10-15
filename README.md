@@ -8,3 +8,6 @@ Have you ever came to a situation that there's multiple games in bundles on Humb
 1. Humble Bundle
 2. Fanatical
 3. Indie Gala
+
+## Available on firefox add-ons
+https://addons.mozilla.org/pl/firefox/addon/do-i-own-this-game/
