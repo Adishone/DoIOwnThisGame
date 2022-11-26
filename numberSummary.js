@@ -7,6 +7,12 @@ function addNumberSummary(numberOfGamesOwnedInBundle, numberOfGamesInBundle, fir
 	} else if (percentageOfGamesOwned < 0.5 && percentageOfGamesOwned > 0.2) {
 		colorStyle = "style='color: yellow'";
 	}
-		
-	firstHeader.innerHTML += "<br /><span " + colorStyle +"> You Own " + numberOfGamesOwnedInBundle + "/" + numberOfGamesInBundle + " games in this bundle </span>";
+	const numberSummaryHederString = "<br /><span id='doIOwnThisGameNumbersSummary' " + colorStyle +"> You Own " + numberOfGamesOwnedInBundle + "/" + numberOfGamesInBundle + " games in this bundle </span>";
+	if (!firstHeader.innerHTML.includes("You Own")) {
+		firstHeader.innerHTML += numberSummaryHederString;
+	} else {
+		const index = firstHeader.innerHTML.indexOf("doIOwnThisGameNumbersSummary");
+		const substring = firstHeader.innerHTML.substring(0, index - 15);
+		firstHeader.innerHTML = substring + numberSummaryHederString;
+	}
 }

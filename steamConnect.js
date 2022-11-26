@@ -1,4 +1,4 @@
-function getApiKeyAndSteamId() {
+function getOwnedGames() {
     return browser.storage.sync.get(['steamApiKey', 'steamId']).then(getGames, onError);
 }
 
@@ -14,7 +14,7 @@ function getGames(apiKeyAndSteamId) {
     })
     .then(function(data) { 
         return data.response.games.map(function (game) {
-            return game.name;
+            return game.name.toLowerCase();
         });
     });
 }
