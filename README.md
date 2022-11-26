@@ -19,3 +19,6 @@ Addon should load automatically on mentioned websites, but in case of any proble
 
 ## I would like to make it also work on this site
 Please open an issue on github with link to the site that you would like to get added
+
+## Available on firefox add-ons
+https://addons.mozilla.org/pl/firefox/addon/do-i-own-this-game/
