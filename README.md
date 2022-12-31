@@ -1,3 +1,4 @@
+![Do I Own This Game Logo](./images/do_i_own_this_game_logo.png)
 # Do I Own This Game
 This is a repository for Do I Own This Game browser addon.
 
