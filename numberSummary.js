@@ -12,7 +12,7 @@ function addNumberSummary(numberOfGamesOwnedInBundle, numberOfGamesInBundle, fir
 		firstHeader.innerHTML += numberSummaryHederString;
 	} else {
 		const index = firstHeader.innerHTML.indexOf("doIOwnThisGameNumbersSummary");
-		const substring = firstHeader.innerHTML.substring(0, index - 15);
+		const substring = firstHeader.innerHTML.substring(0, index - 14);
 		firstHeader.innerHTML = substring + numberSummaryHederString;
 	}
 }

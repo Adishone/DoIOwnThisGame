@@ -1,4 +1,4 @@
-getOwnedGames().then(gameNames => colorizeOwnedGames(gameNames));
+getOwnedGames().then(obj => colorizeOwnedGames(obj.gameNames));
 
 function colorizeOwnedGames(gameNames) {
 	let numberOfGamesOwnedInBundle = 0;

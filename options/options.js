@@ -1,51 +1,65 @@
-function saveOptions(e) {
-  e.preventDefault();
-  const steamApiKeyValue = document.getElementById('steam-api-key').value;
-  const steamIdValue = document.getElementById('steam-id').value;
-  
-  if (steamApiKeyValue) {
-    browser.storage.sync.set({ steamApiKey: steamApiKeyValue });
-  }
+const databaseName = "DoIOwnThisGame";
+const gamesObjectStoreName = "games";
+const sqlQuery = `SELECT lower(substring(GP.value, 11, length(GP.value) - 12)) as title \n
+                  FROM ProductPurchaseDates PPD \n
+                  INNER JOIN GamePieces GP ON PPD.gameReleaseKey = GP.releaseKey \n
+                  INNER JOIN GamePieceTypes GPT ON GP.gamePieceTypeId = GPT.id \n
+                  WHERE GPT.type = 'title' \n
+                  ORDER BY title`;
 
-  if (steamIdValue) {
-    browser.storage.sync.set({ steamId: steamIdValue });
-  }
-
-  const savedMessage = document.getElementById('saved-message');
-  savedMessage.classList.remove('hidden');
-  fadeOutEffect(savedMessage);
-}
-
-function restoreOptions() {
-
-  function setCurrentSteamApiKeyAndId(result) {
-    if (result.steamApiKey) {
-      document.getElementById('steam-api-key-already-set-message').classList.remove('hidden');
+function restoreData() {
+  function setCurrentNumberOfGamesAndLastUpdateDate(result) {
+    if (result.numberOfGames) {
+      document.getElementById('numberOfOwnedGames').innerText = `Number of owned games: ${result.numberOfGames}`
     }
-    if (result.steamId) {
-      document.getElementById('steam-id').value = result.steamId;
+    if (result.lastUpdateDate) {
+      let date = new Date(result.lastUpdateDate).toLocaleString();
+      document.getElementById('lastUpdateDate').innerText = `Last update date of database: ${date}`;
     }
   }
 
-  function onError(error) {
-    console.log(`DoIOwnThisGame: Error: ${error}`);
-  }
-
-  browser.storage.sync.get(['steamApiKey', 'steamId']).then(setCurrentSteamApiKeyAndId, onError);
+  browser.storage.local.get(['numberOfGames', 'lastUpdateDate']).then(setCurrentNumberOfGamesAndLastUpdateDate, onError);
 }
 
-function fadeOutEffect(target) {
-  var fadeEffect = setInterval(function () {
-      if (!target.style.opacity) {
-        target.style.opacity = 1;
-      }
-      if (target.style.opacity > 0) {
-        target.style.opacity -= 0.1;
-      } else {
-          clearInterval(fadeEffect);
-      }
-  }, 200);
+function onError(error) {
+  console.log(`DoIOwnThisGame: Error: ${error}`);
 }
 
-document.addEventListener('DOMContentLoaded', restoreOptions);
-document.querySelector('form').addEventListener('submit', saveOptions);
+function clearBrowserStorage() {
+  browser.storage.local.clear().then(restoreData, onError);
+}
+
+function saveGamesToLocalStorage(resultsArray) {
+  outputElement.innerText += 'Saving data. ';
+  browser.storage.local.set({ numberOfGames: resultsArray.length });
+  browser.storage.local.set({ lastUpdateDate: new Date() });
+  browser.storage.local.set({ gameNames: resultsArray });
+  restoreData();
+}
+
+var dbFileElement = document.getElementById('dbFile');
+var outputElement = document.getElementById('output');
+var clearButton = document.getElementById('clearBrowserStorageButton');
+
+clearButton.onclick = function () {
+  clearBrowserStorage();
+  restoreData();
+}
+
+dbFileElement.onchange = function () {
+	const f = dbFileElement.files[0];
+	const r = new FileReader();
+	r.onload = function() {
+    outputElement.innerText += 'Loading your GoG Galaxy database. ';
+    initSqlJs().then(function(SQL) {
+      const Uints = new Uint8Array(r.result);
+      db = new SQL.Database(Uints);
+      const result = db.exec(sqlQuery);
+      const mergedResult = result[0].values.flat(1);
+      saveGamesToLocalStorage(mergedResult);
+    })
+  };
+  r.readAsArrayBuffer(f);
+}
+
+restoreData();

@@ -9,19 +9,19 @@ document.addEventListener('DOMContentLoaded', function() {
     reloadButton.addEventListener('click', function() {
         reload();
     });
-    checkIfApiKeyAndSteamIdIsSet();
+    checkIfNumberOfGamesAndLastUpdateDateIsSet();
 });
 
 function openOptionsPage() {
     browser.runtime.openOptionsPage();
 }
 
-function checkIfApiKeyAndSteamIdIsSet() {
-    browser.storage.sync.get(['steamApiKey', 'steamId']).then(showOptionsWarningText, onError);
+function checkIfNumberOfGamesAndLastUpdateDateIsSet() {
+    browser.storage.sync.get(['numberOfGames', 'lastUpdateDate']).then(showOptionsWarningText, onError);
 }
 
 function showOptionsWarningText(result) {
-    if(!result.steamApiKey || !result.steamId) {
+    if(!result.numberOfGames || !result.lastUpdateDate) {
         document.querySelector('#options-warning-text').classList.remove('hidden');
     }
 }

@@ -2,9 +2,9 @@
 
   "manifest_version": 2,
   "name": "Do I own this game?",
-  "version": "1.2",
+  "version": "2.0",
 
-  "description": "Checks if you already own games that are in viewed bundles. Works for steam library on Humble Bundle, IndieGala and Fanatical.",
+  "description": "Checks if you already own games that are in viewed bundles. Works with database from GoG Galaxy on Humble Bundle, IndieGala, Fanatical and Oculus Store.",
 
   "icons": {
     "48": "icons/do_i_own_this_game_icon.svg",
@@ -12,8 +12,7 @@
   },
   
   "permissions": [
-	  "storage",
-	  "https://api.steampowered.com/*"
+	  "storage"
 	],
 
   "browser_specific_settings": {
@@ -31,19 +30,23 @@
   "content_scripts": [
     {
       "matches": ["*://*.humblebundle.com/games/*"],
-      "js": ["steamConnect.js", "numberSummary.js", "humbleBundle.js"]
+      "js": ["getGames.js", "numberSummary.js", "humbleBundle.js"]
     },
 	  {
-      "matches": ["*://*.fanatical.com/*/bundle/*", "*://*.fanatical.com/*/pick-and-mix/*"],
-      "js": ["steamConnect.js", "numberSummary.js", "fanatical.js"]
+      "matches": ["*://*.fanatical.com/*/bundle/*"],
+      "js": ["getGames.js", "numberSummary.js", "fanatical.js"]
+    },
+    {
+      "matches": ["*://*.fanatical.com/*/pick-and-mix/*"],
+      "js": ["getGames.js", "numberSummary.js", "fanaticalPickAndMix.js"]
     },
 	  {
       "matches": ["*://*.indiegala.com/bundle/*"],
-      "js": ["steamConnect.js", "numberSummary.js", "indieGala.js"]
+      "js": ["getGames.js", "numberSummary.js", "indieGala.js"]
     },
     {
       "matches": ["*://*.oculus.com/experiences/quest/section/*"],
-      "js": ["steamConnect.js", "numberSummary.js", "oculusQuest.js"]
+      "js": ["getGames.js", "numberSummary.js", "oculusQuest.js"]
     }
   ],
   
