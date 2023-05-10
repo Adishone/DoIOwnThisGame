@@ -2,55 +2,87 @@
 
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Do I Own This Game Options Page</title>
-    <link rel="stylesheet" href="options.css"/>
-    <link rel="stylesheet" href="../milligram.min.css"/>
+    <link rel="stylesheet" href="options.css" />
+    <link rel="stylesheet" href="../milligram.min.css" />
   </head>
 
   <body>
-    <img src="../images/do_i_own_this_game_logo.png" alt="Do I own this game logo">
+    <img
+      src="../images/do_i_own_this_game_logo.png"
+      alt="Do I own this game logo"
+    />
 
-    <span class="successfully-saved hidden" id="saved-message">Data saved!</span>
+    <span class="successfully-saved hidden" id="saved-message"
+      >Data saved!</span
+    >
     <div>
       <h4>What is GoG Galaxy and how do I get it?</h4>
-      GOG Galaxy 2.0 is a wonderful concept of a PC games launcher that puts all your favourite games in one place.
-
-      It's essentially a single library for all your games from Steam, Origin, UPlay and Epic Store, as well as games from GOG.com (naturally). 
-      Various integrations in GOG Galaxy 2.0 mean it works with 20 gaming platforms currently.
-
-      To get it go to <a href="https://www.gog.com/galaxy" target="_blank" rel="noopener noreferrer">GoG Galaxy Site</a>
+      GOG Galaxy 2.0 is a wonderful concept of a PC games launcher that puts all
+      your favourite games in one place. It's essentially a single library for
+      all your games from Steam, Origin, UPlay and Epic Store, as well as games
+      from GOG.com (naturally). Various integrations in GOG Galaxy 2.0 mean it
+      works with 20 gaming platforms currently. To get it go to
+      <a
+        href="https://www.gog.com/galaxy"
+        target="_blank"
+        rel="noopener noreferrer"
+        >GoG Galaxy Site</a
+      >
     </div>
     <div>
       <h4>Where do I find GoG Galaxy Database?</h4>
-      If you are using MAC, default database location will be /Users/Shared/GOG.com/Galaxy/Storage/galaxy-2.0.db <br />
-      If you are using Windows, default database location will be C:\ProgramData\GOG.com\Galaxy\storage\galaxy-2.0.db <br />
-      ProgramData is hidden folder, so you can have problems with finding it on your disk.
+      If you are using MAC, default database location will be
+      /Users/Shared/GOG.com/Galaxy/Storage/galaxy-2.0.db <br />
+      If you are using Windows, default database location will be
+      C:\ProgramData\GOG.com\Galaxy\storage\galaxy-2.0.db <br />
+      ProgramData is hidden folder, so you can have problems with finding it on
+      your disk.
     </div>
     <div>
-      <h4>Do I need to update this extenstion with newer version of database?</h4>
-      Yes, you do. Below this paragraph you will find information when last update happened, if that happened long time ago please reupload your database. 
-      For security reason this step can't be automated.
+      <h4>How to get CSV file with my games?</h4>
+      In Playnite you would need addon to export your games list to CSV:
+      https://playnite.link/addons.html#LibraryExporter_54bf64c6-c453-4cbc-92f8-4960b56f930e
+      Uncheck all fields when exporting as only names are needed.
     </div>
     <div>
-      <h5 id="lastUpdateDate">
-        Last update date of database:
-      </h5>
+      <h4>
+        Do I need to update this extenstion with newer version of database/csv
+        file?
+      </h4>
+      Yes, you do. Below this paragraph you will find information when last
+      update happened, if that happened long time ago please reupload your
+      database/csv file. For security reason this step can't be automated.
     </div>
     <div>
-      <h5 id="numberOfOwnedGames">
-        Number of owned items:
-      </h5>     
+      <h5 id="lastUpdateDate">Last update date of database:</h5>
+    </div>
+    <div>
+      <h5 id="numberOfOwnedGames">Number of owned items:</h5>
     </div>
     <label class="button mt-30">
+      Load CSV games file
+      <input id="csvFile" type="file" accept=".csv" />
+    </label>
+    <label class="button mt-30">
       Load GoG Galaxy database
-      <input id="dbFile" type="file" accept=".db">
+      <input id="dbFile" type="file" accept=".db" />
     </label>
     <button id="clearBrowserStorageButton">Clear Browser Storage</button>
-    <pre id="output">Hello and welcome to Do I Own This Game extension, all messages will show up here.</pre>
+    <pre id="output">
+      Hello and welcome to Do I Own This Game extension, all messages will show up here.</pre
+    >
+    <h4>Games list</h4>
+    <table id="gamesTable">
+      <thead>
+        <tr>
+          <th>Game Name</th>
+        </tr>
+      </thead>
+      <tbody id="gamesTableBody"></tbody>
+    </table>
     <script src="sql-wasm.js"></script>
     <script src="options.js"></script>
-
   </body>
-
 </html>

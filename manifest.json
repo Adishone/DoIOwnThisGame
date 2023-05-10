@@ -1,19 +1,16 @@
 {
-
   "manifest_version": 2,
   "name": "Do I own this game?",
-  "version": "2.0",
+  "version": "2.1",
 
-  "description": "Checks if you already own games that are in viewed bundles. Works with database from GoG Galaxy on Humble Bundle, IndieGala, Fanatical and Oculus Store.",
+  "description": "Checks if you already own games that are in viewed bundles. Works with database from GoG Galaxy or CSV file with exported games on Humble Bundle, IndieGala, Fanatical and Oculus Store.",
 
   "icons": {
     "48": "icons/do_i_own_this_game_icon.svg",
-	  "96": "icons/do_i_own_this_game_icon.svg"
+    "96": "icons/do_i_own_this_game_icon.svg"
   },
-  
-  "permissions": [
-	  "storage"
-	],
+
+  "permissions": ["storage"],
 
   "browser_specific_settings": {
     "gecko": {
@@ -32,7 +29,7 @@
       "matches": ["*://*.humblebundle.com/games/*"],
       "js": ["getGames.js", "numberSummary.js", "humbleBundle.js"]
     },
-	  {
+    {
       "matches": ["*://*.fanatical.com/*/bundle/*"],
       "js": ["getGames.js", "numberSummary.js", "fanatical.js"]
     },
@@ -40,7 +37,7 @@
       "matches": ["*://*.fanatical.com/*/pick-and-mix/*"],
       "js": ["getGames.js", "numberSummary.js", "fanaticalPickAndMix.js"]
     },
-	  {
+    {
       "matches": ["*://*.indiegala.com/bundle/*"],
       "js": ["getGames.js", "numberSummary.js", "indieGala.js"]
     },
@@ -49,7 +46,7 @@
       "js": ["getGames.js", "numberSummary.js", "oculusQuest.js"]
     }
   ],
-  
+
   "options_ui": {
     "page": "options/options.html",
     "open_in_tab": true
