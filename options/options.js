@@ -96,7 +96,10 @@ csvFileElement.onchange = function () {
     resultsSliced.sort();
     var resultsCleared = clearQuotationMarks(resultsSliced);
     uniqueResults = [...new Set(resultsCleared)];
-    saveGamesToLocalStorage(uniqueResults);
+    const lowerCaseResults = uniqueResults.map((game) => {
+      return game.toLowerCase();
+    });
+    saveGamesToLocalStorage(lowerCaseResults);
   };
   reader.readAsText(file);
 };
