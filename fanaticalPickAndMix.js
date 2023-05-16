@@ -5,8 +5,9 @@ function colorizeOwnedGames(gameNames) {
   let numberOfSimiliarOwnedGames = 0;
   let bundleGames = document.getElementsByClassName('card-overlay');
   for (let i = 0; i < bundleGames.length; i++) {
-    let bundleGameName =
-      bundleGames[i].children[0].children[0].innerText.toLowerCase();
+    let bundleGameName = bundleGames[i].children[0].children[0].innerText
+      .toLowerCase()
+      .replace(/[®™]/g, '');
     if (gameNames.includes(bundleGameName)) {
       numberOfGamesOwnedInBundle++;
       bundleGames[i].parentElement.parentElement.parentElement.style.filter =

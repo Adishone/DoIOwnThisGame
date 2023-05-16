@@ -6,8 +6,9 @@ function colorizeOwnedGames(gameNames) {
   let mainGames = document.getElementsByClassName('mega-product-name');
   let bundleGames = document.getElementsByClassName('card-overlay');
   for (let i = 0; i < bundleGames.length; i++) {
-    let bundleGameName =
-      bundleGames[i].children[0].children[0].innerText.toLowerCase();
+    let bundleGameName = bundleGames[i].children[0].children[0].innerText
+      .toLowerCase()
+      .replace(/[®™]/g, '');
     if (gameNames.includes(bundleGameName)) {
       numberOfGamesOwnedInBundle++;
       bundleGames[i].parentElement.parentElement.parentElement.style.filter =

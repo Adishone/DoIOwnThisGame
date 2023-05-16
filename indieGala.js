@@ -7,7 +7,9 @@ function colorizeOwnedGames(gameNames) {
     'bundle-page-tier-item-title'
   );
   for (let i = 0; i < bundleGames.length; i++) {
-    let bundleGameName = bundleGames[i].children[0].innerText.toLowerCase();
+    let bundleGameName = bundleGames[i].children[0].innerText
+      .toLowerCase()
+      .replace(/[®™]/g, '');
     if (gameNames.includes(bundleGameName)) {
       numberOfGamesOwnedInBundle++;
       bundleGames[

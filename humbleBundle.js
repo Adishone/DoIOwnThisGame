@@ -6,7 +6,9 @@ function colorizeOwnedGames(gameNames) {
   let bundleGames = document.getElementsByClassName('item-title');
 
   for (let i = 0; i < bundleGames.length; i++) {
-    const bundleGameName = bundleGames[i].innerText.toLowerCase();
+    const bundleGameName = bundleGames[i].innerText
+      .toLowerCase()
+      .replace(/[®™]/g, '');
     if (gameNames.includes(bundleGameName)) {
       numberOfGamesOwnedInBundle++;
       bundleGames[i].parentElement.style.filter = 'sepia(100%)';
