@@ -1,4 +1,5 @@
 ![Do I Own This Game Logo](./images/do_i_own_this_game_logo.png)
+
 # Do I Own This Game
 
 This is a repository for Do I Own This Game browser addon.
@@ -21,7 +22,7 @@ Have you ever came to a situation that there's multiple games in bundles on Humb
 
 ## Usage
 
-Before using this addon you need to import your GoG Galaxy database file or CSV file with list of games, to do that go to settings page that can be chosen from addon menu.
+Before using this addon you need to import your GoG Galaxy database file or CSV file with list of games or load it from Steam API, your account needs to be public or you will need to also provice Steam API Key. To do that go to settings page that can be chosen from addon menu.
 Addon should load automatically on mentioned websites, but in case of any problems, reload button was introduced in addon menu from version 1.2 to help. It is pretty handy in cases when you can't see full list of games at the start, because of infinite scrolling for example.
 
 ## I would like to make it also work on this site

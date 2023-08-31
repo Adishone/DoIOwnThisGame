@@ -47,6 +47,19 @@
       Uncheck all fields when exporting as only names are needed.
     </div>
     <div>
+      <h4>How to obtain Steam Api Key?</h4>
+      First step to get your own Steam API credentials is to have an Steam
+      Account. To do that you need to access this page
+      <a href="https://store.steampowered.com/join"
+        >https://store.steampowered.com/join</a
+      >, and fill the requested information. You will need to agree with the
+      <a href="https://steamcommunity.com/dev/apiterms"
+        >Steam Api Terms of Use</a
+      >, and that you should have spend more than <b>5.00 USD</b> in the Steam
+      Store to be able to get the API key. Always keep your steam api key as
+      secret.
+    </div>
+    <div>
       <h4>
         Do I need to update this extenstion with newer version of database/csv
         file?
@@ -69,6 +82,31 @@
       Load GoG Galaxy database
       <input id="dbFile" type="file" accept=".db" />
     </label>
+    <br />
+    <div class="container" style="padding: 0; margin: 0">
+      <div class="row">
+        <div class="column">
+          <input
+            type="text"
+            placeholder="Steam ID"
+            id="steamId"
+            class="text-input"
+            required
+          />
+        </div>
+        <div class="column">
+          <input
+            type="text"
+            placeholder="Steam API Key"
+            id="steamApiKey"
+            class="text-input"
+            required
+            autocomplete="new-password"
+          />
+        </div>
+      </div>
+      <button id="loadSteamAPI" disabled>Load games from Steam API</button>
+    </div>
     <button id="clearBrowserStorageButton">Clear Browser Storage</button>
     <pre id="output">
       Hello and welcome to Do I Own This Game extension, all messages will show up here.</pre
