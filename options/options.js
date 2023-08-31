@@ -80,10 +80,35 @@ var outputElement = document.getElementById('output');
 var clearButton = document.getElementById('clearBrowserStorageButton');
 var gamesTable = document.getElementById('gamesTable');
 var gamesTableBody = document.getElementById('gamesTableBody');
+var steamIdInput = document.getElementById('steamId');
+var steamApiKeyInput = document.getElementById('steamApiKey');
+var steamLoadButton = document.getElementById('loadSteamAPI');
 
 clearButton.onclick = function () {
   clearBrowserStorage();
   restoreData();
+};
+
+steamLoadButton.onclick = function () {
+  const steamId = steamIdInput.value;
+  const apiKey = steamApiKeyInput.value;
+  const url = `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${apiKey}&steamid=${steamId}&include_appinfo=true&include_played_free_games=false&include_free_sub=false`;
+  fetch(url)
+    .then(function (response) {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      } else {
+        return response.json();
+      }
+    })
+    .then(function (data) {
+      return data.response.games.map(function (game) {
+        return game.name.toLowerCase();
+      });
+    })
+    .then(function (games) {
+      saveGamesToLocalStorage(games);
+    });
 };
 
 csvFileElement.onchange = function () {
@@ -118,6 +143,22 @@ dbFileElement.onchange = function () {
     });
   };
   reader.readAsArrayBuffer(file);
+};
+
+steamIdInput.oninput = function () {
+  if (steamIdInput.checkValidity() && steamApiKeyInput.checkValidity()) {
+    steamLoadButton.disabled = false;
+  } else {
+    steamLoadButton.disabled = true;
+  }
+};
+
+steamApiKeyInput.oninput = function () {
+  if (steamIdInput.checkValidity() && steamApiKeyInput.checkValidity()) {
+    steamLoadButton.disabled = false;
+  } else {
+    steamLoadButton.disabled = true;
+  }
 };
 
 restoreData();

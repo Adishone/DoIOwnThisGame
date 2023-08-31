@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Do I own this game?",
-  "version": "2.3",
+  "version": "2.4",
 
   "description": "Checks if you already own games that are in viewed bundles. Works with database from GoG Galaxy or CSV file with exported games on Humble Bundle, IndieGala, Fanatical and Oculus Store.",
 
@@ -10,7 +10,10 @@
     "96": "icons/do_i_own_this_game_icon.svg"
   },
 
-  "permissions": ["storage"],
+  "permissions": [
+    "storage",
+    "https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/*"
+  ],
 
   "browser_specific_settings": {
     "gecko": {
