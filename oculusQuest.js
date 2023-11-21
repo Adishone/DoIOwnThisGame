@@ -3,9 +3,7 @@ getOwnedGames().then((obj) => colorizeOwnedGames(obj.gameNames));
 function colorizeOwnedGames(gameNames) {
   let numberOfGamesOwnedInBundle = 0;
   let numberOfSimiliarOwnedGames = 0;
-  let bundleGames = document.getElementsByClassName(
-    'store-section-item__meta-name'
-  );
+  let bundleGames = document.getElementsByClassName('_anhp');
   for (let i = 0; i < bundleGames.length; i++) {
     let bundleGameName = bundleGames[i].innerText
       .toLowerCase()
@@ -37,6 +35,6 @@ function colorizeOwnedGames(gameNames) {
     numberOfGamesOwnedInBundle,
     bundleGames.length,
     numberOfSimiliarOwnedGames,
-    'section-header__title'
+    '_anka'
   );
 }
