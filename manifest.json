@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Do I own this game?",
-  "version": "2.4",
+  "version": "2.5",
 
   "description": "Checks if you already own games that are in viewed bundles. Works with database from GoG Galaxy or CSV file with exported games on Humble Bundle, IndieGala, Fanatical and Oculus Store.",
 
@@ -65,7 +65,7 @@
       ]
     },
     {
-      "matches": ["*://*.oculus.com/experiences/quest/section/*"],
+      "matches": ["*://*.meta.com/*/experiences/section/*"],
       "js": [
         "getGames.js",
         "getNamesDistance.js",
