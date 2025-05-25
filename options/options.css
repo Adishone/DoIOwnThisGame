@@ -33,3 +33,9 @@ img {
 .text-input:invalid {
   border: red solid 3px;
 }
+
+.options-fieldset {
+  border: 2px solid #9b4dca;
+  padding: 10px;
+  border-radius: 10px;
+}

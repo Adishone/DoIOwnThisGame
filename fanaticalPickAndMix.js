@@ -12,6 +12,8 @@ function colorizeOwnedGames(gameNames) {
       numberOfGamesOwnedInBundle++;
       bundleGames[i].parentElement.parentElement.parentElement.style.filter =
         'sepia(100%)';
+      bundleGames[i].parentElement.parentElement.innerHTML +=
+        '<span style="color: gold">You own this game</span>';
     } else {
       let closestDistance = 0;
       let closestGameName = '';
