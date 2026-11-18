@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Do I own this game?",
-  "version": "2.7",
+  "version": "2.8",
 
   "description": "Checks if you already own games that are in viewed bundles. Works with database from GoG Galaxy or CSV file with exported games on Humble Bundle including Humble Choice, IndieGala, Fanatical and Oculus Store.",
 
@@ -34,15 +34,17 @@
         "getGames.js",
         "getNamesDistance.js",
         "numberSummary.js",
+        "bundleOwnership.js",
         "humbleBundle.js"
       ]
     },
     {
-      "matches": ["*://*.humblebundle.com/membership/home"],
+      "matches": ["*://*.humblebundle.com/membership/home*"],
       "js": [
         "getGames.js",
         "getNamesDistance.js",
         "numberSummary.js",
+        "bundleOwnership.js",
         "humbleChoice.js"
       ]
     },
@@ -52,6 +54,7 @@
         "getGames.js",
         "getNamesDistance.js",
         "numberSummary.js",
+        "bundleOwnership.js",
         "fanatical.js"
       ]
     },
@@ -61,6 +64,7 @@
         "getGames.js",
         "getNamesDistance.js",
         "numberSummary.js",
+        "bundleOwnership.js",
         "fanaticalPickAndMix.js"
       ]
     },
@@ -70,6 +74,7 @@
         "getGames.js",
         "getNamesDistance.js",
         "numberSummary.js",
+        "bundleOwnership.js",
         "indieGala.js"
       ]
     },

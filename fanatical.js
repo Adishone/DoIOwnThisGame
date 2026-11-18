@@ -1,51 +1,28 @@
-getOwnedGames().then((obj) => colorizeOwnedGames(obj.gameNames));
+watchBundleOwnership({
+  getGames() {
+    const page = document.querySelector('main.bundle-page');
+    const grid = page?.querySelector(':scope > .container > section.fan-grid-container');
+    const cards = grid ? Array.from(grid.querySelectorAll('.bundle-game-card')) : [];
+    if (page) {
+      return cards.map((card) => ({
+        card,
+        image: card.querySelector('.cover-container img') || card,
+        name: card.querySelector('.card-product-name')?.textContent || '',
+      }));
+    }
 
-function colorizeOwnedGames(gameNames) {
-  let numberOfGamesOwnedInBundle = 0;
-  let numberOfSimiliarOwnedGames = 0;
-  let mainGames = document.getElementsByClassName('mega-product-name');
-  let bundleGames = document.getElementsByClassName('card-overlay');
-  for (let i = 0; i < bundleGames.length; i++) {
-    let bundleGameName = bundleGames[i].children[0].children[0].innerText
-      .toLowerCase()
-      .replace(/[®™]/g, '');
-    if (gameNames.includes(bundleGameName)) {
-      numberOfGamesOwnedInBundle++;
-      bundleGames[i].parentElement.parentElement.parentElement.style.filter =
-        'sepia(100%)';
-      bundleGames[i].parentElement.parentElement.innerHTML +=
-        '<span style="color: gold">You own this game</span>';
-    } else {
-      let closestDistance = 0;
-      let closestGameName = '';
-      gameNames.forEach((gameName) => {
-        let distance = countWordsDistance(bundleGameName, gameName);
-        if (distance > closestDistance) {
-          closestDistance = distance;
-          closestGameName = gameName;
-        }
-      });
-      if (closestDistance > 0.85) {
-        bundleGames[i].parentElement.parentElement.children[0].style.filter =
-          'grayscale(100%)';
-        bundleGames[i].parentElement.parentElement.innerHTML +=
-          '<span style="color: aqua">You own game with similiar name: </span>' +
-          closestGameName;
-        numberOfSimiliarOwnedGames++;
-      }
-    }
-  }
-  for (let j = 0; j < mainGames.length; j++) {
-    if (gameNames.includes(mainGames[j].innerText.toLowerCase())) {
-      numberOfGamesOwnedInBundle++;
-      mainGames[j].parentElement.parentElement.parentElement.style.filter =
-        'sepia(100%)';
-    }
-  }
-  addNumberSummary(
-    numberOfGamesOwnedInBundle,
-    bundleGames.length + mainGames.length,
-    numberOfSimiliarOwnedGames,
-    'product-name'
-  );
-}
+    // Older bundles could also include a featured game outside the card grid.
+    return Array.from(document.querySelectorAll('.card-overlay, .mega-product-name')).map((title) => {
+      const card = title.closest('article') || title.parentElement.parentElement;
+      return {
+        card,
+        image: card.querySelector('img') || card,
+        name: (title.querySelector('.card-product-name') || title.firstElementChild?.firstElementChild || title).textContent,
+      };
+    });
+  },
+  getSummaryTarget() {
+    return document.querySelector('main.bundle-page > .container > section.fan-grid-container');
+  },
+  legacyHeaderClass: 'product-name',
+});

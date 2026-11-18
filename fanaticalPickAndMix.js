@@ -1,43 +1,26 @@
-getOwnedGames().then((obj) => colorizeOwnedGames(obj.gameNames));
-
-function colorizeOwnedGames(gameNames) {
-  let numberOfGamesOwnedInBundle = 0;
-  let numberOfSimiliarOwnedGames = 0;
-  let bundleGames = document.getElementsByClassName('card-overlay');
-  for (let i = 0; i < bundleGames.length; i++) {
-    let bundleGameName = bundleGames[i].children[0].children[0].innerText
-      .toLowerCase()
-      .replace(/[®™]/g, '');
-    if (gameNames.includes(bundleGameName)) {
-      numberOfGamesOwnedInBundle++;
-      bundleGames[i].parentElement.parentElement.parentElement.style.filter =
-        'sepia(100%)';
-      bundleGames[i].parentElement.parentElement.innerHTML +=
-        '<span style="color: gold">You own this game</span>';
-    } else {
-      let closestDistance = 0;
-      let closestGameName = '';
-      gameNames.forEach((gameName) => {
-        let distance = countWordsDistance(bundleGameName, gameName);
-        if (distance > closestDistance) {
-          closestDistance = distance;
-          closestGameName = gameName;
-        }
-      });
-      if (closestDistance > 0.85) {
-        bundleGames[i].parentElement.parentElement.children[0].style.filter =
-          'grayscale(100%)';
-        bundleGames[i].parentElement.parentElement.innerHTML +=
-          '<span style="color: aqua">You own game with similiar name: </span>' +
-          closestGameName;
-        numberOfSimiliarOwnedGames++;
-      }
+watchBundleOwnership({
+  getGames() {
+    const page = document.querySelector('main.PickAndMixProductPage');
+    const cards = page ? Array.from(page.querySelectorAll('.PickAndMixHits .PickAndMixCard')) : [];
+    if (page) {
+      return cards.map((card) => ({
+        card,
+        image: card.querySelector('.cover-container img') || card,
+        name: card.querySelector('.card-product-name')?.textContent || '',
+      }));
     }
-  }
-  addNumberSummary(
-    numberOfGamesOwnedInBundle,
-    bundleGames.length,
-    numberOfSimiliarOwnedGames,
-    'pnm-upsell-message'
-  );
-}
+
+    return Array.from(document.querySelectorAll('.card-overlay')).map((title) => {
+      const card = title.closest('article') || title.parentElement.parentElement;
+      return {
+        card,
+        image: card.querySelector('img') || card,
+        name: (title.querySelector('.card-product-name') || title.firstElementChild?.firstElementChild || title).textContent,
+      };
+    });
+  },
+  getSummaryTarget() {
+    return document.querySelector('main.PickAndMixProductPage .PickAndMixHits');
+  },
+  legacyHeaderClass: 'pnm-upsell-message',
+});

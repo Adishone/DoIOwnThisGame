@@ -1,47 +1,19 @@
-getOwnedGames().then((obj) => colorizeOwnedGames(obj.gameNames));
-
-function colorizeOwnedGames(gameNames) {
-  let numberOfGamesOwnedInBundle = 0;
-  let numberOfSimiliarOwnedGames = 0;
-  let bundleGames = document.getElementsByClassName(
-    'bundle-page-tier-item-title'
-  );
-  for (let i = 0; i < bundleGames.length; i++) {
-    let bundleGameName = bundleGames[i].children[0].innerText
-      .toLowerCase()
-      .replace(/[®™]/g, '');
-    if (gameNames.includes(bundleGameName)) {
-      numberOfGamesOwnedInBundle++;
-      bundleGames[
-        i
-      ].parentElement.parentElement.parentElement.parentElement.style.filter =
-        'sepia(100%)';
-      bundleGames[i].innerHTML +=
-        '<br /><span style="color: gold">You own this game </span>';
-    } else {
-      let closestDistance = 0;
-      let closestGameName = '';
-      gameNames.forEach((gameName) => {
-        let distance = countWordsDistance(bundleGameName, gameName);
-        if (distance > closestDistance) {
-          closestDistance = distance;
-          closestGameName = gameName;
-        }
-      });
-      if (closestDistance > 0.85) {
-        bundleGames[i].parentElement.parentElement.children[2].style.filter =
-          'grayscale(100%)';
-        bundleGames[i].innerHTML +=
-          '<br /><span style="color: aqua">You own game with similiar name: </span>' +
-          closestGameName;
-        numberOfSimiliarOwnedGames++;
-      }
-    }
-  }
-  addNumberSummary(
-    numberOfGamesOwnedInBundle,
-    bundleGames.length,
-    numberOfSimiliarOwnedGames,
-    'bundle-page-tier-text'
-  );
-}
+watchBundleOwnership({
+  getGames() {
+    return Array.from(document.querySelectorAll(
+      '.bundle-page-tier-games .bundle-page-tier-item-title'
+    )).map((title) => {
+      const card = title.closest('.bundle-page-tier-item-outer') ||
+        title.closest('.bundle-page-tier-item-inner') || title.parentElement;
+      return {
+        card,
+        image: card.querySelector('figure img') || card.querySelector('img') || card,
+        name: title.textContent,
+      };
+    });
+  },
+  getSummaryTarget() {
+    return document.querySelector('.bundle-page-tier-games');
+  },
+  legacyHeaderClass: 'bundle-page-tier-text',
+});

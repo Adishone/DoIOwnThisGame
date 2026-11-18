@@ -1,44 +1,31 @@
-getOwnedGames().then((obj) => colorizeOwnedGames(obj.gameNames));
-
-function colorizeOwnedGames(gameNames) {
-  let numberOfGamesOwnedInBundle = 0;
-  let numberOfSimiliarOwnedGames = 0;
-  let bundleGames = document.getElementsByClassName('content-choice-title');
-
-  for (let i = 0; i < bundleGames.length; i++) {
-    const bundleGameName = bundleGames[i].innerText
-      .toLowerCase()
-      .replace(/[®™]/g, '');
-    if (gameNames.includes(bundleGameName)) {
-      numberOfGamesOwnedInBundle++;
-      bundleGames[i].parentElement.parentElement.style.filter = 'sepia(100%)';
-      bundleGames[i].innerHTML +=
-        '<br /><span style="color: gold">You own this game</span>';
-    } else {
-      let closestDistance = 0;
-      let closestGameName = '';
-      gameNames.forEach((gameName) => {
-        let distance = countWordsDistance(bundleGameName, gameName);
-        if (distance > closestDistance) {
-          closestDistance = distance;
-          closestGameName = gameName;
-        }
-      });
-      if (closestDistance > 0.85) {
-        bundleGames[i].parentElement.parentElement.children[0].style.filter =
-          'grayscale(100%)';
-        bundleGames[i].innerHTML +=
-          '<br /><span style="color: aqua">You own game with similiar name: </span>' +
-          closestGameName;
-        numberOfSimiliarOwnedGames++;
-      }
-    }
+(function () {
+  function getChoiceGrid() {
+    // The monthly grid follows the heading and purchase controls. Scope the
+    // lookup to that grid so promotions and detail dialogs are not counted.
+    const heading = document.querySelector('main h1');
+    const container = heading && heading.parentElement.parentElement;
+    return container ? container.querySelector(':scope > .grid') : null;
   }
 
-  addNumberSummary(
-    numberOfGamesOwnedInBundle,
-    bundleGames.length,
-    numberOfSimiliarOwnedGames,
-    'subhub-secondary-title'
-  );
-}
+  watchBundleOwnership({
+    getGames() {
+      const grid = getChoiceGrid();
+      if (grid) {
+        return Array.from(grid.querySelectorAll('[data-testid="product-card"]')).map((card) => {
+          // Choice thumbnails have empty alt text; read the visible footer title.
+          const title = card.querySelector(
+            '[data-testid="product-card-footer"] [class~="group/product-title"] .line-clamp-1'
+          );
+          const image = card.querySelector('[data-testid="product-thumbnail"] img');
+          return { card, image: image || card, name: title ? title.textContent : '' };
+        });
+      }
+      return Array.from(document.querySelectorAll('.content-choice-title')).map((title) => {
+        const card = title.parentElement.parentElement;
+        return { card, image: card.querySelector('img') || card, name: title.textContent };
+      });
+    },
+    getSummaryTarget: getChoiceGrid,
+    legacyHeaderClass: 'subhub-secondary-title',
+  });
+})();
