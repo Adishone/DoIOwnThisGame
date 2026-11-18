@@ -4,33 +4,35 @@ function addNumberSummary(
   numberOfSimiliarGames,
   firstHeaderClass
 ) {
-  const firstHeader = document.getElementsByClassName(firstHeaderClass)[0];
+  const firstHeader =
+    typeof firstHeaderClass === 'string'
+      ? document.getElementsByClassName(firstHeaderClass)[0]
+      : firstHeaderClass;
+  if (!firstHeader) return;
   const percentageOfGamesOwned =
     numberOfGamesOwnedInBundle / numberOfGamesInBundle;
-  let colorStyle = "style='color: green'";
-  const aquaColorStyle = "style='color: aqua'";
+  let color = 'green';
   if (percentageOfGamesOwned > 0.5) {
-    colorStyle = "style='color: red'";
+    color = 'red';
   } else if (percentageOfGamesOwned < 0.5 && percentageOfGamesOwned > 0.2) {
-    colorStyle = "style='color: yellow'";
+    color = 'yellow';
   }
-  const numberSummaryHederString =
-    "<br /><span id='doIOwnThisGameNumbersSummary' " +
-    colorStyle +
-    '> You Own ' +
-    numberOfGamesOwnedInBundle +
-    '/' +
-    numberOfGamesInBundle +
-    ' games in this bundle</span> <br /><span ' +
-    aquaColorStyle +
-    '>You own ' +
-    numberOfSimiliarGames +
-    ' similiar games</span>';
-  if (!firstHeader.innerHTML.includes('You Own')) {
-    firstHeader.innerHTML += numberSummaryHederString;
-  } else {
-    const index = firstHeader.innerHTML.indexOf('doIOwnThisGameNumbersSummary');
-    const substring = firstHeader.innerHTML.substring(0, index - 14);
-    firstHeader.innerHTML = substring + numberSummaryHederString;
+  let summary = firstHeader.querySelector('[data-do-i-own-this-game-summary]');
+  if (!summary) {
+    summary = document.createElement('span');
+    summary.setAttribute('data-do-i-own-this-game-summary', '');
+    const owned = document.createElement('span');
+    owned.id = 'doIOwnThisGameNumbersSummary';
+    owned.style.display = 'block';
+    const similar = document.createElement('span');
+    similar.style.cssText = 'display: block; color: aqua;';
+    summary.append(owned, similar);
+    firstHeader.appendChild(summary);
   }
+  summary.children[0].style.color = color;
+  summary.children[0].textContent =
+    'You Own ' + numberOfGamesOwnedInBundle + '/' + numberOfGamesInBundle +
+    ' games in this bundle';
+  summary.children[1].textContent =
+    'You own ' + numberOfSimiliarGames + ' similar games';
 }
